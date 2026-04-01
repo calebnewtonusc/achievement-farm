@@ -194,3 +194,5 @@ gh api graphql -f query='{ repository(owner: "YOUR_USERNAME", name: "achievement
 ## License
 
 MIT — do whatever you want with it.
+
+All glory to God! ✝️❤️
