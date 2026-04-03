@@ -8,13 +8,13 @@ Built by [@calebnewtonusc](https://github.com/calebnewtonusc).
 
 ## Achievements You'll Earn
 
-| Achievement | Tiers | What Triggers It |
-|---|---|---|
-| **Quickdraw** | Default | Close an issue or PR within 5 min of opening it |
-| **YOLO** | Default | Merge a PR without a code review |
-| **Pull Shark** | Default → Bronze → Silver → **Gold** | 2 / 16 / 128 / 1,024 merged PRs |
-| **Pair Extraordinaire** | Default → Bronze → Silver → **Gold** | 1 / 10 / 24 / 48 co-authored merged PRs |
-| **Galaxy Brain** | Default → Bronze → Silver → **Gold** | 2 / 8 / 16 / 32 accepted discussion answers |
+| Achievement             | Tiers                                | What Triggers It                                |
+| ----------------------- | ------------------------------------ | ----------------------------------------------- |
+| **Quickdraw**           | Default                              | Close an issue or PR within 5 min of opening it |
+| **YOLO**                | Default                              | Merge a PR without a code review                |
+| **Pull Shark**          | Default → Bronze → Silver → **Gold** | 2 / 16 / 128 / 1,024 merged PRs                 |
+| **Pair Extraordinaire** | Default → Bronze → Silver → **Gold** | 1 / 10 / 24 / 48 co-authored merged PRs         |
+| **Galaxy Brain**        | Default → Bronze → Silver → **Gold** | 2 / 8 / 16 / 32 accepted discussion answers     |
 
 All scripts target the **Gold tier** — you'll pick up every tier below it automatically along the way.
 
@@ -69,6 +69,7 @@ bash /path/to/ach-scripts/scripts/quickdraw_yolo.sh YOUR_USERNAME achievement-fa
 ```
 
 What it does:
+
 - Opens an issue and immediately closes it (Quickdraw)
 - Creates a branch, opens a PR, and merges it without requesting review (YOLO)
 
@@ -80,7 +81,14 @@ What it does:
 bash /path/to/ach-scripts/scripts/pull_shark.sh YOUR_USERNAME achievement-farm
 ```
 
+To resume if it stopped partway through (e.g. at PR 571):
+
+```bash
+bash /path/to/ach-scripts/scripts/pull_shark.sh YOUR_USERNAME achievement-farm 571
+```
+
 What it does:
+
 - Creates 1,024 branches, one at a time
 - Opens a PR for each and merges it
 - Unlocks Default (2), Bronze (16), Silver (128), and Gold (1,024) automatically
@@ -96,6 +104,7 @@ bash /path/to/ach-scripts/scripts/pair_extraordinaire.sh YOUR_USERNAME achieveme
 ```
 
 What it does:
+
 - Creates 50 branches with commits that include a `Co-authored-by:` trailer
 - Opens and merges each PR
 - GitHub counts co-authored commits in merged PRs toward this achievement
@@ -109,6 +118,7 @@ bash /path/to/ach-scripts/scripts/galaxy_brain.sh YOUR_USERNAME achievement-farm
 ```
 
 What it does:
+
 - Enables Discussions on your repo
 - Creates 32 Q&A discussions, posts an answer to each, and marks it as accepted
 - Rate-limited by GitHub so it sleeps between requests automatically
@@ -119,12 +129,12 @@ What it does:
 
 ## How Long Does It Take?
 
-| Script | Runtime |
-|---|---|
-| quickdraw_yolo.sh | ~30 seconds |
-| pull_shark.sh | ~60 minutes |
+| Script                 | Runtime     |
+| ---------------------- | ----------- |
+| quickdraw_yolo.sh      | ~30 seconds |
+| pull_shark.sh          | ~60 minutes |
 | pair_extraordinaire.sh | ~10 minutes |
-| galaxy_brain.sh | ~5 minutes |
+| galaxy_brain.sh        | ~5 minutes  |
 
 **Total: ~75 minutes** (mostly just waiting on Pull Shark)
 
@@ -146,20 +156,21 @@ Check your profile at `github.com/YOUR_USERNAME` the next morning — everything
 
 Some achievements genuinely require real human interaction:
 
-| Achievement | Why You Can't Script It |
-|---|---|
-| **Starstruck** | Needs 16 real people to star one of your repos. Share your best project on socials. |
-| **Public Sponsor** | Requires actually paying to sponsor someone on GitHub Sponsors ($1/mo minimum). |
-| **Heart On Your Sleeve** | GitHub has never documented the trigger. Reacting with ❤️ is the community's best guess but unconfirmed. |
-| **Open Sourcerer** | Also undocumented. Likely requires PRs merged into repos you genuinely don't own. |
-| **Arctic Code Vault** | Retired. No longer earnable. |
-| **Mars 2020 Contributor** | Retired. No longer earnable. |
+| Achievement               | Why You Can't Script It                                                                                  |
+| ------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Starstruck**            | Needs 16 real people to star one of your repos. Share your best project on socials.                      |
+| **Public Sponsor**        | Requires actually paying to sponsor someone on GitHub Sponsors ($1/mo minimum).                          |
+| **Heart On Your Sleeve**  | GitHub has never documented the trigger. Reacting with ❤️ is the community's best guess but unconfirmed. |
+| **Open Sourcerer**        | Also undocumented. Likely requires PRs merged into repos you genuinely don't own.                        |
+| **Arctic Code Vault**     | Retired. No longer earnable.                                                                             |
+| **Mars 2020 Contributor** | Retired. No longer earnable.                                                                             |
 
 ---
 
 ## Troubleshooting
 
 **Script fails with "Bad credentials"**
+
 ```bash
 gh auth login
 # then re-run the script
@@ -168,10 +179,16 @@ gh auth login
 **PRs failing to merge with "CONFLICTING"**
 
 This happens when branches stack on each other. Kill the script, run:
+
 ```bash
 git checkout main && git fetch origin && git reset --hard origin/main
 ```
-Then re-run from where it left off by changing the `seq 1 $TARGET` start number.
+
+Then re-run from where it left off using the START argument:
+
+```bash
+bash /path/to/ach-scripts/scripts/pull_shark.sh YOUR_USERNAME achievement-farm 571
+```
 
 **Galaxy Brain rate limit errors**
 
@@ -180,6 +197,7 @@ The script already sleeps between requests. If it still gets rate limited, incre
 **Achievements not showing after 24 hours**
 
 Double-check the action actually happened:
+
 ```bash
 # Count merged PRs
 gh pr list --repo YOUR_USERNAME/achievement-farm --state merged --limit 1100 --json number | jq 'length'

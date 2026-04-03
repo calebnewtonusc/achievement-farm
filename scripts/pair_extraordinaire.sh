@@ -18,7 +18,7 @@ for i in $(seq 1 $TARGET); do
 Co-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
   git push origin "$BRANCH" --quiet 2>/dev/null
   PR_NUM=$(gh pr create --repo "$FULL_REPO" --head "$BRANCH" --base main --title "pair: pr $i" --body "Co-authored PR $i" 2>/dev/null | grep -oE '[0-9]+$')
-  gh pr merge "$PR_NUM" --repo "$FULL_REPO" --squash 2>/dev/null
+  gh pr merge "$PR_NUM" --repo "$FULL_REPO" --merge 2>/dev/null
   echo "[$i/$TARGET] Merged pair PR #$PR_NUM"
   git checkout main && git pull origin main --quiet 2>/dev/null
 done

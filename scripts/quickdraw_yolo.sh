@@ -11,7 +11,7 @@ gh issue close "$ISSUE_NUM" --repo "$FULL_REPO"
 echo "Quickdraw done — opened and closed issue #$ISSUE_NUM"
 echo ""
 echo "=== YOLO ==="
-BRANCH="yolo/first-pr"
+BRANCH="yolo/pr-$(date +%s)"
 git checkout main && git pull origin main --quiet 2>/dev/null
 git checkout -b "$BRANCH"
 echo "YOLO $(date)" >> yolo.md

@@ -1,14 +1,16 @@
 #!/bin/bash
 # Earns: Pull Shark Gold (1,024 merged PRs)
-# Usage: bash scripts/pull_shark.sh YOUR_USERNAME YOUR_REPO
+# Usage: bash scripts/pull_shark.sh YOUR_USERNAME YOUR_REPO [START]
+#   START is optional — use it to resume if the script stopped (e.g. bash pull_shark.sh user repo 571)
 # Runtime: ~1 hour
 set -e
-USERNAME=${1:?Usage: bash pull_shark.sh USERNAME REPO}
-REPO=${2:?Usage: bash pull_shark.sh USERNAME REPO}
+USERNAME=${1:?Usage: bash pull_shark.sh USERNAME REPO [START]}
+REPO=${2:?Usage: bash pull_shark.sh USERNAME REPO [START]}
+START=${3:-1}
 FULL_REPO="$USERNAME/$REPO"
 TARGET=1024
-echo "Pull Shark Gold — merging $TARGET PRs. Takes ~1 hour."
-for i in $(seq 1 $TARGET); do
+echo "Pull Shark Gold — merging PRs $START–$TARGET. Takes ~1 hour."
+for i in $(seq $START $TARGET); do
   BRANCH="shark/pr-$i"
   git checkout main 2>/dev/null
   git pull origin main --quiet 2>/dev/null
