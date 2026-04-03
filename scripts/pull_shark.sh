@@ -14,7 +14,9 @@ for i in $(seq $START $TARGET); do
   BRANCH="shark/pr-$i"
   git checkout main 2>/dev/null
   git pull origin main --quiet 2>/dev/null
-  git checkout -b "$BRANCH" 2>/dev/null
+  git branch -D "$BRANCH" 2>/dev/null || true
+  git push origin --delete "$BRANCH" 2>/dev/null || true
+  git checkout -b "$BRANCH"
   echo "PR $i — $(date)" >> shark.md
   git add shark.md
   git commit -m "feat: shark $i" --quiet
