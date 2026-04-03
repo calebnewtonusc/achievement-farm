@@ -24,6 +24,7 @@ for i in $(seq $START $TARGET); do
   PR_NUM=$(gh pr create --repo "$FULL_REPO" --head "$BRANCH" --base main --title "shark: pr $i" --body "Pull Shark $i" 2>/dev/null | grep -oE '[0-9]+$')
   gh pr merge "$PR_NUM" --repo "$FULL_REPO" --squash 2>/dev/null
   echo "[$i/$TARGET] Merged PR #$PR_NUM"
+  sleep 2
   git checkout main && git pull origin main --quiet 2>/dev/null
 done
 echo "Done! Pull Shark Gold earned."
